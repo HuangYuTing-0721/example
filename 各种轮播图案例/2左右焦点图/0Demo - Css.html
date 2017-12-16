@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <style>
+    body, ul, ol, li, img {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    
+    #box {
+      width: 490px;
+      height: 270px;
+      padding: 5px;
+      position: relative;
+      border: 1px solid #ccc;
+      margin: 100px auto 0;
+    }
+    
+    .ad {
+      width: 490px;
+      height: 270px;
+      /*overflow: hidden;*/
+      position: relative;
+    }
+    
+    #box img {
+      width: 490px;
+    }
+    
+    .ad ol {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+    }
+    
+    .ad ol li {
+      width: 20px;
+      height: 20px;
+      line-height: 20px;
+      border: 1px solid #ccc;
+      text-align: center;
+      background: #fff;
+      float: left;
+      margin-right: 10px;
+      cursor: pointer;
+      _display: inline;
+    }
+    
+    .ad ol li.current {
+      background: yellow;
+    }
+    
+    .ad ul li {
+      float: left;
+    }
+    
+    .ad ul {
+      position: absolute;
+      top: 0;
+      width: 2940px;
+    }
+    
+    .ad ul li.current {
+      display: block;
+    }
+    
+    #arr {
+      display: none;
+    }
+    
+    #arr span {
+      width: 40px;
+      height: 40px;
+      position: absolute;
+      left: 5px;
+      top: 50%;
+      margin-top: -20px;
+      background: #000;
+      cursor: pointer;
+      line-height: 40px;
+      text-align: center;
+      font-weight: bold;
+      font-family: '黑体';
+      font-size: 30px;
+      color: #fff;
+      opacity: 0.3;
+      border: 1px solid #fff;
+    }
+    
+    #arr #right {
+      right: 5px;
+      left: auto;
+    }
+  </style>
+</head>
+<body>
+<div id="box" class="all">
+  <div class="ad">
+    <ul id="imgs">
+      <li><img src="images/1.jpg"/></li>
+      <li><img src="images/2.jpg"/></li>
+      <li><img src="images/3.jpg"/></li>
+      <li><img src="images/4.jpg"/></li>
+      <li><img src="images/5.jpg"/></li>
+    </ul>
+  </div>
+  <div id="arr">
+    <span id="left">&lt;</span>
+    <span id="right">&gt;</span>
+  </div>
+</div>
+
+<script>
+  //简单轮播图：依靠点击的按钮的索引值，控制list运动到哪个位置
+  //左右焦点图，无法使用某个标签的索引，所以我们自己设置变量计数
+  
+  
+  //1 获取元素
+  var box = document.getElementById("box");
+  var ad = box.children[0];//可视区域
+  var imgWid = ad.offsetWidth;//一张图片的宽度
+  var list = ad.children[0];//需要进行运动的列表
+  
+  var arrBox = box.children[1];//左右箭头的父盒子
+  var arrLeft = arrBox.children[0];
+  var arrRight = arrBox.children[1];
+  
+  //2 鼠标移入盒子时，让箭头显示
+  box.onmouseover = function () {
+    arrBox.style.display = "block";
+  };
+  box.onmouseout = function () {
+    arrBox.style.display = "none";
+  };
+  
+  //3 点击右按钮
+  //声明一个变量记录：滚过的图片张数
+  var picCount = 0;
+  
+  arrRight.onclick = function () {
+    
+    //如果没有到达length-1，这时可以运动
+    if (picCount < list.children.length - 1) {
+      //滚过的张数+1
+      picCount++;
+      
+      //根据滚过图片张数，计算list要运动的距离
+      var target = -picCount * imgWid;
+      animate(list, target);
+    }
+  };
+  
+  //左按钮点击效果
+  arrLeft.onclick = function () {
+    
+    //最少为滚动0张图，所以只有滚过的图片张数>0时，才可以点击左按钮运动
+    if (picCount > 0) {
+      //设置计数--
+      picCount--;
+      
+      //根据picCount计算出滚动到的位置
+      var target = -picCount * imgWid;
+      animate(list, target);
+    }
+  };
+  
+  
+  function animate(tag, target) {
+    //var timer = null;//如果设置为局部变量，导致多次调用相互之间无法访问，无法阻止加速
+    
+    clearInterval(tag.timer);// 开始位置清除定时器防止加速
+    tag.timer = setInterval(function () {
+      var leader = tag.offsetLeft;// 元素当前位置
+      var step = 9;
+      //根据当前位置和目标位置之间的大小关系，设置step的正负
+      step = leader > target ? -step : step;
+      
+      //有可能用户设置的步长无法正好运动到指定的目标位置
+      //会导致，元素在目标位置左右来回运动，形成抽搐
+      //我们可以通过判断leader和target之间的距离与step的大小关系来决定走多少
+      if (Math.abs(leader - target) > Math.abs(step)) {
+        leader = leader + step;// 简单运动公式 ： 元素的新位置 = 元素的当前位置 + 步长
+        tag.style.left = leader + "px";// 将计算出的新位置设置给box
+      } else {
+        //说明当前元素与目标位置之间的距离不足一步，这时让元素直接运动到指定位置
+        tag.style.left = target + "px";
+        clearInterval(tag.timer);// 到达指定位置后，清除定时器
+      }
+    }, 20);
+  }
+
+</script>
+</body>
+</html>

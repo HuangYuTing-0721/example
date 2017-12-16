@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title></title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    
+    ul {
+      list-style: none;
+    }
+    
+    img {
+      vertical-align: top;
+    }
+    
+    /*取消图片底部3像素距离*/
+    .box {
+      width: 300px;
+      height: 200px;
+      margin: 100px auto;
+      background-color: pink;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .box ul li {
+      float: left;
+    }
+    
+    .box ul {
+      width: 1500px;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  </style>
+</head>
+<body>
+<div class="box" id="screen">
+  <ul>
+    <li><img src="images/01.jpg" alt=""/></li>
+    <li><img src="images/02.jpg" alt=""/></li>
+    <li><img src="images/03.jpg" alt=""/></li>
+    <li><img src="images/04.jpg" alt=""/></li>
+    <!--放置了一个假的第一张，为了制作无缝滚动效果-->
+    <li><img src="images/01.jpg" alt=""/></li>
+  </ul>
+</div>
+<script>
+  //1 获取元素
+  var box = document.getElementById("screen");
+  var imgWid = box.offsetWidth;//图片宽度
+  var list = box.children[0];//要运动的ul
+  var timer = null;
+  
+  //2 运动，但是不需要停，不需要使用animate
+  timer = setInterval(function () {
+    var leader = list.offsetLeft;//当前位置
+    var step = -10;
+    
+    //我们需要判断盒子运动的位置(什么时候可以抽回)
+    //list.offsetWidth - imgWid;
+    //(list.children.length-1)*imgWid;
+    
+    if (leader > -(list.offsetWidth - imgWid)) {
+      //没有到达抽回的位置，继续运动
+      leader = leader + step;
+      //将计算后的值设置给left即可
+      list.style.left = leader + "px";
+    } else {
+      //达到位置，抽回
+      //将运动速度放慢后我们发现，当抽回时，由于真假第一张是重合的
+      // 会有一个定时器间隔没有图片画面的改变(实际上是换了图片)
+      list.style.left = step + "px";
+    }
+  }, 40);
+  
+  //无缝滚动最终的目的是掌握抽回的方式！！
+
+</script>
+</body>
+</html>
