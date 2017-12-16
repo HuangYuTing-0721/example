@@ -1,6 +1,4 @@
-/**
- * Created by 彭林 on 2017/9/1.
- */
+
 //3.获取元素样式的值， 做封装
 function getStyle(obj,attr){
   //能力检测
