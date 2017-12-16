@@ -1,14 +1,12 @@
+
 /**
- * Created by Administrator on 2016/10/25.
- */
-/**
- * »ñµÃ±êÇ©¶ÔÏóÊôĞÔÖµµÄº¯Êı
+ * è·å¾—æ ‡ç­¾å¯¹è±¡å±æ€§å€¼çš„å‡½æ•°
  * @param obj
  * @param attr
  * @returns {*}
  */
 function getStyle(obj,attr){
-    // ÄÜÁ¦¼ì²â  ËùÎ½µÄÄÜÁ¦¼ì²â£¬Ò²¾ÍÊÇ¿´ä¯ÀÀÆ÷ÊÇ·ñÖ§³Ö´Ë¶ÔÏóµÄÊôĞÔ»òÊÇ·½·¨
+    // èƒ½åŠ›æ£€æµ‹  æ‰€è°“çš„èƒ½åŠ›æ£€æµ‹ï¼Œä¹Ÿå°±æ˜¯çœ‹æµè§ˆå™¨æ˜¯å¦æ”¯æŒæ­¤å¯¹è±¡çš„å±æ€§æˆ–æ˜¯æ–¹æ³•
     if(obj&&obj.currentStyle){
         return  obj.currentStyle[attr];
     }else {
@@ -17,40 +15,40 @@ function getStyle(obj,attr){
 }
 
 function animate(obj,json,fn){
-    // ÎªÁË±£Ö¤µ±Ç°¶ÔÏóÔË¶¯µÄÊ±ºò£¬Ö»»á¿ªÆôÒ»¸ö¶¨Ê±Æ÷£¬ĞèÒª½«¶¨Ê±Æ÷´æÔÚµ±Ç°¶ÔÏóµÄÊôĞÔÖĞ
+    // ä¸ºäº†ä¿è¯å½“å‰å¯¹è±¡è¿åŠ¨çš„æ—¶å€™ï¼Œåªä¼šå¼€å¯ä¸€ä¸ªå®šæ—¶å™¨ï¼Œéœ€è¦å°†å®šæ—¶å™¨å­˜åœ¨å½“å‰å¯¹è±¡çš„å±æ€§ä¸­
     clearInterval(obj.timerId);
     obj.timerId = setInterval(function (){
         var flag = true;
         for(var key in json){
             if(key=="opacity"){
-                var leader = parseInt(getStyle(obj,key)*100)||0; //ÒòÎªopacityÊÇĞ¡Êı£¬ÎªÁË±ãÓÚ¼ÆËã£¬ÏÈ½«´ËÖµÀ©´ó100±¶
-                var target = json[key]*100;//Õâ¸ö¾ÍÊÇjsonÀïÃæµÄÄ¿±êÎ»ÖÃ
+                var leader = parseInt(getStyle(obj,key)*100)||0; //å› ä¸ºopacityæ˜¯å°æ•°ï¼Œä¸ºäº†ä¾¿äºè®¡ç®—ï¼Œå…ˆå°†æ­¤å€¼æ‰©å¤§100å€
+                var target = json[key]*100;//è¿™ä¸ªå°±æ˜¯jsoné‡Œé¢çš„ç›®æ ‡ä½ç½®
                 var step = (target-leader)/10;
                 step=  step>0?Math.ceil(step):Math.floor(step);
                 leader = leader + step;
                 obj.style[key] = leader/100;
             }else if(key=="zIndex"){
-                var leader = parseInt(getStyle(obj,key))||0; //µ±Ç°¶ÔÏóÏÖÔÚµÄÊôĞÔÖµ
-                var target = json[key];//Õâ¸ö¾ÍÊÇjsonÀïÃæµÄÄ¿±êÎ»ÖÃ
+                var leader = parseInt(getStyle(obj,key))||0; //å½“å‰å¯¹è±¡ç°åœ¨çš„å±æ€§å€¼
+                var target = json[key];//è¿™ä¸ªå°±æ˜¯jsoné‡Œé¢çš„ç›®æ ‡ä½ç½®
                 step = (target-leader)/10;
                 step=  step>0?Math.ceil(step):Math.floor(step);
                 leader = leader + step;
                 obj.style[key] = leader;
             }else {
-                var leader = parseInt(getStyle(obj,key))||0; //µ±Ç°¶ÔÏóÏÖÔÚµÄÊôĞÔÖµ
-                var target = json[key];//Õâ¸ö¾ÍÊÇjsonÀïÃæµÄÄ¿±êÎ»ÖÃ
+                var leader = parseInt(getStyle(obj,key))||0; //å½“å‰å¯¹è±¡ç°åœ¨çš„å±æ€§å€¼
+                var target = json[key];//è¿™ä¸ªå°±æ˜¯jsoné‡Œé¢çš„ç›®æ ‡ä½ç½®
                 var step = (target-leader)/10;
                 step=  step>0?Math.ceil(step):Math.floor(step);
                 leader = leader + step;
                 obj.style[key] = leader +'px';
             }
-            if(leader!=target){ //Èç¹ûÓĞÒ»¸öÊôĞÔµÄÖµÃ»ÓĞµ½´ïÄ¿±êÎ»ÖÃµÄ»°,¾ÍÒªÈÃflagÎªfalse
+            if(leader!=target){ //å¦‚æœæœ‰ä¸€ä¸ªå±æ€§çš„å€¼æ²¡æœ‰åˆ°è¾¾ç›®æ ‡ä½ç½®çš„è¯,å°±è¦è®©flagä¸ºfalse
                 flag = false;
             }
         }
-        if(flag){ // Òª¸ù¾İflagµÄÖµÀ´È·¶¨ÊÇ·ñÒªÇå³ı¶¨Ê±Æ÷
+        if(flag){ // è¦æ ¹æ®flagçš„å€¼æ¥ç¡®å®šæ˜¯å¦è¦æ¸…é™¤å®šæ—¶å™¨
             clearInterval(obj.timerId);
-            if(fn){ //Èç¹ûfnÓĞÖµ£¬²¢ÇÒÊÇÒ»¸öº¯ÊıµÄ»°£¬Ôòµ÷ÓÃÕâ¸öº¯Êı
+            if(fn){ //å¦‚æœfnæœ‰å€¼ï¼Œå¹¶ä¸”æ˜¯ä¸€ä¸ªå‡½æ•°çš„è¯ï¼Œåˆ™è°ƒç”¨è¿™ä¸ªå‡½æ•°
                 fn();
             }
         }
