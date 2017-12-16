@@ -1,6 +1,4 @@
-/**
- * Created by Administrator on 2017/3/28.
- */
+
 window.onload = function(){
     var config = [
         {
@@ -38,8 +36,8 @@ window.onload = function(){
             "opacity": 0.2,
             "zIndex": 2
         }//4
-    ];//ÆäÊµ¾ÍÊÇÒ»¸öÅäÖÃµ¥ ¹æ¶¨ÁËÃ¿ÕÅÍ¼Æ¬µÄ´óĞ¡Î»ÖÃ²ã¼¶Í¸Ã÷¶È
-    //1. »ñµÃÒª²Ù×÷µÄ¶ÔÏó
+    ];//å…¶å®å°±æ˜¯ä¸€ä¸ªé…ç½®å• è§„å®šäº†æ¯å¼ å›¾ç‰‡çš„å¤§å°ä½ç½®å±‚çº§é€æ˜åº¦
+    //1. è·å¾—è¦æ“ä½œçš„å¯¹è±¡
     var wrap = document.getElementById("wrap");
     var slide = document.getElementById("slide");
     var arrow = document.getElementById("arrow");
@@ -47,7 +45,7 @@ window.onload = function(){
     var arrRight = document.getElementById("arrRight");
     var lis = slide.getElementsByTagName("li");
     var flag = true;
-    // 2. ÈÃÃ¿¸öli±êÇ©¸÷¾Í¸÷Î»
+    // 2. è®©æ¯ä¸ªliæ ‡ç­¾å„å°±å„ä½
     assign();
 
     function assign(){
@@ -58,31 +56,31 @@ window.onload = function(){
         }
     }
 
-    // 3. Êó±êÒÆÈë´óºĞ×Ó£¬ÒªÏÔÊ¾×óÓÒ°´Å¥
+    // 3. é¼ æ ‡ç§»å…¥å¤§ç›’å­ï¼Œè¦æ˜¾ç¤ºå·¦å³æŒ‰é’®
     wrap.onmouseover = function (){
            animate(arrow,{
                opacity:1
            })
     };
-    //4. Êó±êÀë¿ªÖ®ºó£¬ÒªÒş²Ø×óÓÒ°´Å¥
+    //4. é¼ æ ‡ç¦»å¼€ä¹‹åï¼Œè¦éšè—å·¦å³æŒ‰é’®
     wrap.onmouseout = function (){
            animate(arrow,{
                opacity  :0
            })
     }
 
-    // 5. ¸øÓÒ²à°´Å¥×¢²áÊÂ¼ş
+    // 5. ç»™å³ä¾§æŒ‰é’®æ³¨å†Œäº‹ä»¶
     arrRight.onclick = function (){
         if(flag){
             flag = false;
-            // µ¥»÷ÓÒ²à°´Å¥£¬ÈÃµÚÎåÕÅÍ¼Æ¬×ßµ½µÚÒ»ÕÅÍ¼Æ¬µÄÎ»ÖÃ,ÒÀ´ÎÀàÍÆ£¬Êµ¼Ê ÉÏ¾ÍÊÇÈÃµÚÒ»¸öli±êÇ©µÄÑùÊ½À´¿ØÖÆ µÚ5¸öli±êÇ©
-            config.push(config.shift());// ½«Êı×éÖĞµÄµÚÒ»Ïî¼ôÇĞÏÂÀ´£¬×·¼Óµ½Êı×éµÄ×îºóÃæ
-            assign();// ¸ù¾İĞÂÉú³ÉµÄÊı×é£¬ÖØĞÂÉú³ÉÃ¿¸öli±êÇ©µÄÑùÊ½
+            // å•å‡»å³ä¾§æŒ‰é’®ï¼Œè®©ç¬¬äº”å¼ å›¾ç‰‡èµ°åˆ°ç¬¬ä¸€å¼ å›¾ç‰‡çš„ä½ç½®,ä¾æ¬¡ç±»æ¨ï¼Œå®é™… ä¸Šå°±æ˜¯è®©ç¬¬ä¸€ä¸ªliæ ‡ç­¾çš„æ ·å¼æ¥æ§åˆ¶ ç¬¬5ä¸ªliæ ‡ç­¾
+            config.push(config.shift());// å°†æ•°ç»„ä¸­çš„ç¬¬ä¸€é¡¹å‰ªåˆ‡ä¸‹æ¥ï¼Œè¿½åŠ åˆ°æ•°ç»„çš„æœ€åé¢
+            assign();// æ ¹æ®æ–°ç”Ÿæˆçš„æ•°ç»„ï¼Œé‡æ–°ç”Ÿæˆæ¯ä¸ªliæ ‡ç­¾çš„æ ·å¼
         }
 
     }
 
-    // 6. ¸ø×ó²à°´Å¥×¢²áÊÂ¼ş
+    // 6. ç»™å·¦ä¾§æŒ‰é’®æ³¨å†Œäº‹ä»¶
     arrLeft.onclick = function (){
         if(flag){
             flag = false;
@@ -91,7 +89,7 @@ window.onload = function(){
         }
     }
 
-    // 7. ¼Ó½ÚÁ÷·§  ¾ÍÊÇ¸øÃ¿¸ö°´Å¥¼ÓÒ»¸öÅĞ¶ÏÌõ¼ş
+    // 7. åŠ èŠ‚æµé˜€  å°±æ˜¯ç»™æ¯ä¸ªæŒ‰é’®åŠ ä¸€ä¸ªåˆ¤æ–­æ¡ä»¶
     //animate(lis[0],config[0]);
     //animate(lis[1],config[1]);
     //animate(lis[2],config[2]);
